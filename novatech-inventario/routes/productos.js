@@ -21,5 +21,9 @@ router.post("/", (req, res) => {
   guardarProductos(productos);
   res.status(201).json(nuevoProducto);
 });
-
+// GET /api/productos - listar productos
+router.get("/", (req, res) => {
+  const productos = leerProductos();
+  res.json(productos);
+});
 module.exports = router;
