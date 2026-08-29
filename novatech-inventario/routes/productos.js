@@ -44,4 +44,13 @@ router.put("/:id", (req, res) => {
   guardarProductos(productos);
   res.json(productos[idx]);
 });
+router.delete("/:id", (req, res) => {
+  const id = Number(req.params.id);
+  let productos = leerProductos();
+  const existe = productos.some((p) => p.id === id);
+  if (!existe) return res.status(404).json({ error: "Producto no encontrado" });
+  productos = productos.filter((p) => p.id !== id);
+  guardarProductos(productos);
+  res.status(204).send();
+});
 module.exports = router;

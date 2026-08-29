@@ -47,7 +47,11 @@ async function cargarProductos() {
       <td>$${p.precio.toFixed(2)} (IVA: $${calcularPrecioConIVA(p.precio).toFixed(2)})</td>
       <td>${p.categoria}</td>
       <td>${p.stock}</td>
-            <td><button class="edit" onclick="prepararEdicion(${p.id})">Editar</button></td>
+        <td>
+        <button class="edit" onclick="prepararEdicion(${p.id})">Editar</button>
+        <button class="danger" onclick="eliminarProducto(${p.id})">Eliminar</button>
+      </td>
+      
     `;
     tbody.appendChild(tr);
   });
@@ -74,4 +78,9 @@ async function editarProducto(id, producto) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(producto),
   });
+  
+}
+async function eliminarProducto(id) {
+  await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+  cargarProductos();
 }
