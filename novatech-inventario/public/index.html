@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>NovaTech Solutions - Inventario</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>NovaTech Solutions</h1>
+    <p>Sistema de Inventario de Productos</p>
+  </header>
+
+  <main>
+    <section id="form-section">
+      <h2>Nuevo producto</h2>
+      <form id="form-producto">
+        <input type="text" id="nombre" placeholder="Nombre" required />
+        <input type="number" id="precio" placeholder="Precio" step="0.01" required />
+        <input type="text" id="categoria" placeholder="Categoría" required />
+        <input type="number" id="stock" placeholder="Stock" required />
+        <button type="submit">Guardar</button>
+      </form>
+    </section>
+
+    <section id="tabla-section">
+      <h2>Productos</h2>
+      <table id="tabla-productos">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Categoría</th>
+            <th>Stock</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

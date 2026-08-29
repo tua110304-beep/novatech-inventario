@@ -1,0 +1,16 @@
+{
+  "name": "novatech-inventario",
+  "version": "1.0.0",
+  "description": "Sistema de inventario de productos - NovaTech Solutions (Actividad Integradora Git Flow)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["gitflow", "inventario", "novatech"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
