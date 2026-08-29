@@ -34,4 +34,4 @@ En construcción. Consulta la sección "Funcionalidades" a medida que se agregan
 
 ## Equipo
 
-_Pendiente de completar por el equipo._
+- Tomás — Backend y control de versiones
