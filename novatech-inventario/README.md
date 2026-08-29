@@ -35,3 +35,4 @@ En construcción. Consulta la sección "Funcionalidades" a medida que se agregan
 ## Equipo
 
 - Tomás — Backend y control de versiones
+- Ana — Frontend y pruebas
