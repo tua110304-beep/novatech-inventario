@@ -20,7 +20,12 @@ form.addEventListener("submit", async (e) => {
     categoria: document.getElementById("categoria").value,
     stock: document.getElementById("stock").value,
   };
+  if (idEnEdicion) {
+    await editarProducto(idEnEdicion, producto);
+    idEnEdicion = null;
+  } else {
     await crearProducto(producto);
+  }
   form.reset();
   cargarProductos();
 });
@@ -42,10 +47,31 @@ async function cargarProductos() {
       <td>$${p.precio.toFixed(2)} (IVA: $${calcularPrecioConIVA(p.precio).toFixed(2)})</td>
       <td>${p.categoria}</td>
       <td>${p.stock}</td>
-      <td></td>
+            <td><button class="edit" onclick="prepararEdicion(${p.id})">Editar</button></td>
     `;
     tbody.appendChild(tr);
   });
 }
 
 cargarProductos();
+
+let idEnEdicion = null;
+
+async function prepararEdicion(id) {
+  const res = await fetch(API_URL);
+  const productos = await res.json();
+  const p = productos.find((x) => x.id === id);
+  document.getElementById("nombre").value = p.nombre;
+  document.getElementById("precio").value = p.precio;
+  document.getElementById("categoria").value = p.categoria;
+  document.getElementById("stock").value = p.stock;
+  idEnEdicion = id;
+}
+
+async function editarProducto(id, producto) {
+  await fetch(`${API_URL}/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(producto),
+  });
+}
