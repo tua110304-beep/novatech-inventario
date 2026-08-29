@@ -30,9 +30,8 @@ form.addEventListener("submit", async (e) => {
   cargarProductos();
 });
 function calcularPrecioConIVA(precio) {
-  // BUG intencional: esto solo calcula el monto del impuesto, no el precio total.
-  // Lo vamos a corregir más adelante en el hotfix 1.0.1
-  return precio * 0.16;
+  // Corregido: ahora se suma el IVA (16%) al precio base
+  return precio * 1.16;
 }
 
 async function cargarProductos() {
