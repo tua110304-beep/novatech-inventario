@@ -1,12 +1,56 @@
 // routes/productos.js
-// Endpoints de la API de productos.
-// IMPORTANTE: este archivo se completa progresivamente en la Fase 3,
-// una funcionalidad por rama feature/*. En la base solo existe el router vacío.
-
 const express = require("express");
 const router = express.Router();
+const { leerProductos, guardarProductos, generarId } = require("../models/producto");
 
-// Los endpoints (crear, listar, editar, eliminar) se agregan aquí,
-// uno por uno, cada uno en su propia rama feature/*.
+// POST /api/productos - crear un producto
+router.post("/", (req, res) => {
+  const { nombre, precio, categoria, stock } = req.body;
+  if (!nombre || precio == null || !categoria || stock == null) {
+    return res.status(400).json({ error: "Faltan campos requeridos" });
+  }
+  const productos = leerProductos();
+  const nuevoProducto = {
+    id: generarId(productos),
+    nombre,
+    precio: Number(precio),
+    categoria,
+    stock: Number(stock),
+  };
+  productos.push(nuevoProducto);
+  guardarProductos(productos);
+  res.status(201).json(nuevoProducto);
+});
+// GET /api/productos - listar productos
+router.get("/", (req, res) => {
+  const productos = leerProductos();
+  res.json(productos);
+});
+// PUT /api/productos/:id - editar un producto
+router.put("/:id", (req, res) => {
+  const id = Number(req.params.id);
+  const productos = leerProductos();
+  const idx = productos.findIndex((p) => p.id === id);
+  if (idx === -1) return res.status(404).json({ error: "Producto no encontrado" });
 
+  const { nombre, precio, categoria, stock } = req.body;
+  productos[idx] = {
+    ...productos[idx],
+    nombre: nombre ?? productos[idx].nombre,
+    precio: precio != null ? Number(precio) : productos[idx].precio,
+    categoria: categoria ?? productos[idx].categoria,
+    stock: stock != null ? Number(stock) : productos[idx].stock,
+  };
+  guardarProductos(productos);
+  res.json(productos[idx]);
+});
+router.delete("/:id", (req, res) => {
+  const id = Number(req.params.id);
+  let productos = leerProductos();
+  const existe = productos.some((p) => p.id === id);
+  if (!existe) return res.status(404).json({ error: "Producto no encontrado" });
+  productos = productos.filter((p) => p.id !== id);
+  guardarProductos(productos);
+  res.status(204).send();
+});
 module.exports = router;
